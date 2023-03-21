@@ -1,6 +1,6 @@
 
 # Use a texmf folder to contain shared configuration.
-export TEXMFHOME := justfile_directory() / 'texmf'
+export TEXMFHOME := justfile_directory() / 'texmf' + ',' + `kpsewhich -var-value=TEXMFHOME`
 
 # Directory containing TeX sources.
 src := 'src'
