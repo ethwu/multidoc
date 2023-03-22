@@ -4,10 +4,10 @@
 \RequirePackage{xparse}
 
 % Track the document root. Needs to be redefined on a per-file level for subdocuments.
-% Only defines if `\projectroot` has not already been defined.
-\ProvideDocumentCommand{\projectroot}{ }{.}
+% Only defines if `\multidocument@root` has not already been defined.
+\ProvideDocumentCommand{\multidocument@root}{ }{.}
 % Input a subdocument using the relative path to the project root.
-\NewDocumentCommand{\rinput}{ m }{\input{\projectroot/#1}}
+\NewDocumentCommand{\rinput}{ m }{\input{\multidocument@root/#1}}
 
 % Relative sectioning commands.
 

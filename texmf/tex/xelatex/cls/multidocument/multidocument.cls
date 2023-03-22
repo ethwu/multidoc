@@ -20,8 +20,7 @@
 
 \RequirePackage{docmute}
 
-\let\projectroot=\multidocument@root\relax
-% Relative sectioning.
+% Relative sectioning. Uses the definition of \multidocument@root.
 \RequirePackage{multidocument-relative-sectioning}
 
 \endinput
