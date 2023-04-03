@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{multidocument-relative-sectioning}[2023/03/21 Relative inclusion and sectioning.]
+\ProvidesPackage{multidocument-relative-sectioning}[2023/04/03 Relative inclusion and sectioning.]
 
 \RequirePackage{xparse}
 
@@ -18,19 +18,19 @@
 \NewDocumentCommand{\rsinput}{ m }{\advance\@rlevel by \@ne\rinput{#1}\advance\@rlevel by \m@ne}
 \NewDocumentCommand{\setrlevel}{ m }{\@rlevel=#1}
 
-\NewDocumentCommand{\rsection}{ sm }{
+\NewDocumentCommand{\rsection}{ som }{
     \ifnum \@rlevel=0
-        \IfBooleanTF#1{\chapter*{#2}}{\chapter{#2}}
+        \IfBooleanTF#1{\chapter*[#2]{#3}}{\chapter[#2]{#3}}
     \else \ifnum \@rlevel=1
-            \IfBooleanTF#1{\section*{#2}}{\section{#2}}
+            \IfBooleanTF#1{\section*[#2]{#3}}{\section[#2]{#3}}
         \else \ifnum \@rlevel=2
-                \IfBooleanTF#1{\subsection*{#2}}{\subsection{#2}}
+                \IfBooleanTF#1{\subsection*[#2]{#3}}{\subsection[#2]{#3}}
             \else \ifnum \@rlevel=3
-                    \IfBooleanTF#1{\subsubsection*{#2}}{\subsubsection{#2}}
+                    \IfBooleanTF#1{\subsubsection*[#2]{#3}}{\subsubsection[#2]{#3}}
                 \else \ifnum \@rlevel=4
-                        \IfBooleanTF#1{\paragraph*{#2}}{\paragraph{#2}}
+                        \IfBooleanTF#1{\paragraph*[#2]{#3}}{\paragraph[#2]{#3}}
                     \else
-                        \IfBooleanTF#1{\subparagraph*{#2}}{\subparagraph{#2}}
+                        \IfBooleanTF#1{\subparagraph*[#2]{#3}}{\subparagraph[#2]{#3}}
                     \fi
                 \fi
             \fi
@@ -38,32 +38,32 @@
     \fi
 }
 
-\NewDocumentCommand{\rsubsection}{ sm }{
+\NewDocumentCommand{\rsubsection}{ som }{
     \ifnum \@rlevel=0
-        \IfBooleanTF#1{\section*{#2}}{\section{#2}}
+        \IfBooleanTF#1{\section*[#2]{#3}}{\section[#2]{#3}}
     \else \ifnum \@rlevel=1
-            \IfBooleanTF#1{\subsection*{#2}}{\subsection{#2}}
+            \IfBooleanTF#1{\subsection*[#2]{#3}}{\subsection[#2]{#3}}
         \else \ifnum \@rlevel=2
-                \IfBooleanTF#1{\subsubsection*{#2}}{\subsubsection{#2}}
+                \IfBooleanTF#1{\subsubsection*[#2]{#3}}{\subsubsection[#2]{#3}}
             \else \ifnum \@rlevel=3
-                    \IfBooleanTF#1{\paragraph*{#2}}{\paragraph{#2}}
+                    \IfBooleanTF#1{\paragraph*[#2]{#3}}{\paragraph[#2]{#3}}
                 \else
-                    \IfBooleanTF#1{\subparagraph*{#2}}{\subparagraph{#2}}
+                    \IfBooleanTF#1{\subparagraph*[#2]{#3}}{\subparagraph[#2]{#3}}
                 \fi
             \fi
         \fi
     \fi
 }
 
-\NewDocumentCommand{\rsubsubsection}{ sm }{
+\NewDocumentCommand{\rsubsubsection}{ som }{
     \ifnum \@rlevel=0
-        \IfBooleanTF#1{\subsection*{#2}}{\subsection{#2}}
+        \IfBooleanTF#1{\subsection*[#2]{#3}}{\subsection[#2]{#3}}
     \else \ifnum \@rlevel=1
-            \IfBooleanTF#1{\subsubsection*{#2}}{\subsubsection{#2}}
+            \IfBooleanTF#1{\subsubsection*[#2]{#3}}{\subsubsection[#2]{#3}}
         \else \ifnum \@rlevel=2
-                \IfBooleanTF#1{\paragraph*{#2}}{\paragraph{#2}}
+                \IfBooleanTF#1{\paragraph*[#2]{#3}}{\paragraph[#2]{#3}}
             \else
-                \IfBooleanTF#1{\subparagraph*{#2}}{\subparagraph{#2}}
+                \IfBooleanTF#1{\subparagraph*[#2]{#3}}{\subparagraph[#2]{#3}}
             \fi
         \fi
     \fi
