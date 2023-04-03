@@ -13,60 +13,47 @@
 
 % Counter tracking the current section nesting level.
 \newcount\@rlevel
-\@rlevel=1
-% Input a subdocument with increased relative sectioning depth.
-\NewDocumentCommand{\rsinput}{ m }{\advance\@rlevel by \@ne\rinput{#1}\advance\@rlevel by \m@ne}
+% If this is a book or a memoir, start at sectioning level 0, otherwise 1.
+\@ifclassloaded{book}{\@rlevel=0}{\@ifclassloaded{memoir}{\@rlevel=0}{\@rlevel=1}}
 \NewDocumentCommand{\setrlevel}{ m }{\@rlevel=#1}
 
-\NewDocumentCommand{\rsection}{ som }{
+% Redefine the sectioning commands.
+\NewDocumentCommand{\redefine@relative@sectioning}{ }{%
     \ifnum \@rlevel=0
-        \IfBooleanTF#1{\chapter*[#2]{#3}}{\chapter[#2]{#3}}
+        \let\rsection\chapter
+        \let\rsubsection\section
+        \let\rsubsubsection\subsection
     \else \ifnum \@rlevel=1
-            \IfBooleanTF#1{\section*[#2]{#3}}{\section[#2]{#3}}
+            \let\rsection\section
+            \let\rsubsection\subsection
+            \let\rsubsubsection\subsubsection
         \else \ifnum \@rlevel=2
-                \IfBooleanTF#1{\subsection*[#2]{#3}}{\subsection[#2]{#3}}
+                \let\rsection\subsection
+                \let\rsubsection\subsubsection
+                \let\rsubsubsection\subsubsubsection
             \else \ifnum \@rlevel=3
-                    \IfBooleanTF#1{\subsubsection*[#2]{#3}}{\subsubsection[#2]{#3}}
+                    \let\rsection\subsubsection
+                    \let\rsubsection\paragraph
+                    \let\rsubsubsection\subparagraph
                 \else \ifnum \@rlevel=4
-                        \IfBooleanTF#1{\paragraph*[#2]{#3}}{\paragraph[#2]{#3}}
+                        \let\rsection\paragraph
+                        \let\rsubsection\subparagraph
                     \else
-                        \IfBooleanTF#1{\subparagraph*[#2]{#3}}{\subparagraph[#2]{#3}}
+                        \let\rsection\subparagraph
                     \fi
                 \fi
             \fi
         \fi
     \fi
 }
+\redefine@relative@sectioning
 
-\NewDocumentCommand{\rsubsection}{ som }{
-    \ifnum \@rlevel=0
-        \IfBooleanTF#1{\section*[#2]{#3}}{\section[#2]{#3}}
-    \else \ifnum \@rlevel=1
-            \IfBooleanTF#1{\subsection*[#2]{#3}}{\subsection[#2]{#3}}
-        \else \ifnum \@rlevel=2
-                \IfBooleanTF#1{\subsubsection*[#2]{#3}}{\subsubsection[#2]{#3}}
-            \else \ifnum \@rlevel=3
-                    \IfBooleanTF#1{\paragraph*[#2]{#3}}{\paragraph[#2]{#3}}
-                \else
-                    \IfBooleanTF#1{\subparagraph*[#2]{#3}}{\subparagraph[#2]{#3}}
-                \fi
-            \fi
-        \fi
-    \fi
-}
-
-\NewDocumentCommand{\rsubsubsection}{ som }{
-    \ifnum \@rlevel=0
-        \IfBooleanTF#1{\subsection*[#2]{#3}}{\subsection[#2]{#3}}
-    \else \ifnum \@rlevel=1
-            \IfBooleanTF#1{\subsubsection*[#2]{#3}}{\subsubsection[#2]{#3}}
-        \else \ifnum \@rlevel=2
-                \IfBooleanTF#1{\paragraph*[#2]{#3}}{\paragraph[#2]{#3}}
-            \else
-                \IfBooleanTF#1{\subparagraph*[#2]{#3}}{\subparagraph[#2]{#3}}
-            \fi
-        \fi
-    \fi
-}
+% Input a subdocument with increased relative sectioning depth.
+\NewDocumentCommand{\rsinput}{ m }{
+    \advance\@rlevel by \@ne%
+    \redefine@relative@sectioning%
+    \rinput{#1}%
+    \advance\@rlevel by \m@ne%
+    \redefine@relative@sectioning}
 
 \endinput
