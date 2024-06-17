@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{multidocument-relative-sectioning}[2023/04/03 Relative inclusion and sectioning.]
+\ProvidesPackage{multidocument-relative-sectioning}[2024/06/17 Relative inclusion and sectioning.]
 
 \RequirePackage{xparse}
 
@@ -20,26 +20,26 @@
 % Redefine the sectioning commands.
 \NewDocumentCommand{\redefine@relative@sectioning}{ }{%
     \ifnum \@rlevel=0
-        \let\rsection\chapter
-        \let\rsubsection\section
-        \let\rsubsubsection\subsection
+        \def\rsection{\chapter}
+        \def\rsubsection{\section}
+        \def\rsubsubsection{\subsection}
     \else \ifnum \@rlevel=1
-            \let\rsection\section
-            \let\rsubsection\subsection
-            \let\rsubsubsection\subsubsection
+            \def\rsection{\section}
+            \def\rsubsection{\subsection}
+            \def\rsubsubsection{\subsubsection}
         \else \ifnum \@rlevel=2
-                \let\rsection\subsection
-                \let\rsubsection\subsubsection
-                \let\rsubsubsection\subsubsubsection
+                \def\rsection{\subsection}
+                \def\rsubsection{\subsubsection}
+                \def\rsubsubsection{\subsubsubsection}
             \else \ifnum \@rlevel=3
-                    \let\rsection\subsubsection
-                    \let\rsubsection\paragraph
-                    \let\rsubsubsection\subparagraph
+                    \def\rsection{\subsubsection}
+                    \def\rsubsection{\paragraph}
+                    \def\rsubsubsection{\subparagraph}
                 \else \ifnum \@rlevel=4
-                        \let\rsection\paragraph
-                        \let\rsubsection\subparagraph
+                        \def\rsection{\paragraph}
+                        \def\rsubsection{\subparagraph}
                     \else
-                        \let\rsection\subparagraph
+                        \def\rsection{\subparagraph}
                     \fi
                 \fi
             \fi
